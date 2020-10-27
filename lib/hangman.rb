@@ -2,6 +2,10 @@
 
 # When a game is started load the dictionary and randomly select a word between
 # 5 and 12 characters long to be the secret word.
+def pick_random_word
+  picked = File.readlines('5desk.txt').sample
+  picked.length.between?(5,12) ? picked : pick_random_word
+end
 
 # Display a count that shows the how many incorrect guesses are left before the
 # game will end. Also display the correct letters that have already been choosen
@@ -15,3 +19,5 @@
 # Implement the ability to save the game at the start of the player's turn.
 
 # When the program is openeed add an option to load one of your saved games.
+
+puts pick_random_word
