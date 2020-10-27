@@ -11,6 +11,17 @@ end
 # game will end. Also display the correct letters that have already been choosen
 # and their position in the hidden word along with any that have already been
 # choosen. (ex. r_b_)
+def display_game(secret_word, previous_guesses, remaining_turns)
+  system 'clear'
+  # Example of the interface
+  # | Remaining: 9 | ru_y |
+  puts "| Remaining: #{remaining_turns} | #{reveal_correct(secret_word, previous_guesses)} |"
+end
+
+def reveal_correct(secret_word, previous_guesses)
+  # The following string is just for testing.
+  '_ _ c _ _ _'
+end
 
 # Each turn have the player guess a letter (case insensitive) and then display
 # whether it was correct or not. If the player is out of guesses then they loose
@@ -20,4 +31,4 @@ end
 
 # When the program is openeed add an option to load one of your saved games.
 
-puts pick_random_word
+display_game('secret', ['a', 'b', 'c'], 8)
