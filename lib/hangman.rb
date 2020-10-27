@@ -7,15 +7,45 @@ def pick_random_word
   picked.length.between?(5,12) ? picked : pick_random_word
 end
 
-# Display a count that shows the how many incorrect guesses are left before the
-# game will end. Also display the correct letters that have already been choosen
-# and their position in the hidden word along with any that have already been
-# choosen. (ex. r_b_)
+# Display the correct letters that have already been choosen and their position
+# in the hidden word along with any that have already been choosen (ex. r_b_).
+# For each incorrect guess draw one part, have the display draw one part of the
+# person. In the display method have the default values for those spaces be ' '.
+#
+# ------------------------------------------
+# |   |   | enter 'save' to save your game |
+# |   O   |--------------------------------|
+# |  \|/  |                                |
+# |   |   |                                |
+# |  / \  |--------------------------------|
+# |       |                                |
+# ------------------------------------------
+# >
+#
+# ------------------------------------------
+# |       | enter 'save' to save your game |
+# |       |--------------------------------|
+# |       |                                |
+# |       |                                |
+# |       |--------------------------------|
+# |       |                                |
+# ------------------------------------------
+# >
 def display_game(secret_word, previous_guesses, remaining_turns)
   system 'clear'
-  # Example of the interface
-  # | Remaining: 9 | ru_y |
-  puts "| Remaining: #{remaining_turns} | #{reveal_correct(secret_word, previous_guesses)} |"
+
+  interface = <<~INTERFACE
+    ------------------------------------------
+    |   |   | enter 'save' to save your game |
+    |   O   |--------------------------------|
+    |  \\|/  |                                |
+    |   |   |                                |
+    |  / \\  |--------------------------------|
+    |       |                                |
+    ------------------------------------------
+  INTERFACE
+
+  puts interface
 end
 
 def reveal_correct(secret_word, previous_guesses)
@@ -32,3 +62,5 @@ end
 # When the program is openeed add an option to load one of your saved games.
 
 display_game('secret', ['a', 'b', 'c'], 8)
+
+
