@@ -33,7 +33,9 @@ end
 # >
 def display_game(incorrect_guesses)
   # The following variables are for letting the display know what person pieces
-  # to draw.
+  # to draw. These are probably better moved to a different method and have the
+  # incorrect_guesses instead be an instance variable once the class is made
+  # for the game.
   head = incorrect_guesses >= 1 ? 'O' : ' '
   neck = incorrect_guesses >= 2 ? '|' : ' '
   left_arm = incorrect_guesses >= 3 ? '/' : ' '
@@ -47,7 +49,7 @@ def display_game(incorrect_guesses)
 
   interface = <<~INTERFACE
     ------------------------------------------
-    |   #{rope}   | enter 'save' to save your game |
+    |   #{rope}   | enter 'save' to save and quit  |
     |   #{head}   |--------------------------------|
     |  #{right_arm}#{neck}#{left_arm}  |                                |
     |   #{torso}   |                                |
@@ -57,6 +59,42 @@ def display_game(incorrect_guesses)
   INTERFACE
 
   puts interface
+end
+
+# This displays the game menu when the game is ran. It should give the player
+# the following options: New Game, Load Game, and Quit.
+def display_menu
+  system 'clear'
+  
+  interface = <<~INTERFACE
+    ------------------------------------------
+    |#{'Welcome to Hangman'.center(40)}|
+    |                                        |
+    |#{'1. New Game'.center(40)}|
+    |#{'2. Load Game'.center(40)}|
+    |#{'3. Quit     '.center(40)}|
+    |                                        |
+    ------------------------------------------
+    >
+  INTERFACE
+
+  puts interface
+  handle_menu_selection
+end
+
+def handle_menu_selection
+  selection = gets.chomp
+  case selection
+  when '1'
+    # Start a new game.
+  when '2'
+    # Load a saved game.
+  when '3'
+    # Quit the game.
+    exit
+  else
+    display_menu
+  end
 end
 
 def reveal_correct
@@ -73,4 +111,4 @@ end
 
 # When the program is openeed add an option to load one of your saved games.
 
-display_game(0)
+display_menu
