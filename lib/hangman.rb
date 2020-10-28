@@ -4,13 +4,13 @@
 # 5 and 12 characters long to be the secret word.
 def pick_random_word
   picked = File.readlines('5desk.txt').sample
-  picked.length.between?(5,12) ? picked : pick_random_word
+  picked.length.between?(5, 12) ? picked : pick_random_word
 end
 
 # Display the correct letters that have already been choosen and their position
 # in the hidden word along with any that have already been choosen (ex. r_b_).
-# For each incorrect guess draw one part, have the display draw one part of the
-# person. In the display method have the default values for those spaces be ' '.
+# For each incorrect guess draw one body part have the display draw one part.
+# In the display method have the default values for those spaces be ' '.
 #
 # ------------------------------------------
 # |   |   | enter 'save' to save your game |
@@ -31,16 +31,27 @@ end
 # |       |                                |
 # ------------------------------------------
 # >
-def display_game
+def display_game(incorrect_guesses)
+  # The following variables are for letting the display know what person pieces
+  # to draw.
+  head = incorrect_guesses >= 1 ? 'O' : ' '
+  neck = incorrect_guesses >= 2 ? '|' : ' '
+  left_arm = incorrect_guesses >= 3 ? '/' : ' '
+  right_arm = incorrect_guesses >= 4 ? '\\' : ' '
+  torso = incorrect_guesses >= 5 ? '|' : ' '
+  left_leg = incorrect_guesses >= 6 ? '\\' : ' '
+  right_leg = incorrect_guesses >= 7 ? '/' : ' '
+  rope = incorrect_guesses >= 8 ? '|' : ' '
+
   system 'clear'
 
   interface = <<~INTERFACE
     ------------------------------------------
-    |   |   | enter 'save' to save your game |
-    |   O   |--------------------------------|
-    |  \\|/  |                                |
-    |   |   |                                |
-    |  / \\  |--------------------------------|
+    |   #{rope}   | enter 'save' to save your game |
+    |   #{head}   |--------------------------------|
+    |  #{right_arm}#{neck}#{left_arm}  |                                |
+    |   #{torso}   |                                |
+    |  #{right_leg} #{left_leg}  |--------------------------------|
     |       |#{reveal_correct}|
     ------------------------------------------
   INTERFACE
@@ -62,4 +73,4 @@ end
 
 # When the program is openeed add an option to load one of your saved games.
 
-display_game
+display_game(0)
