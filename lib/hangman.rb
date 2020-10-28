@@ -31,7 +31,7 @@ end
 # |       |                                |
 # ------------------------------------------
 # >
-def display_game(secret_word, previous_guesses, remaining_turns)
+def display_game
   system 'clear'
 
   interface = <<~INTERFACE
@@ -41,16 +41,17 @@ def display_game(secret_word, previous_guesses, remaining_turns)
     |  \\|/  |                                |
     |   |   |                                |
     |  / \\  |--------------------------------|
-    |       |                                |
+    |       |#{reveal_correct}|
     ------------------------------------------
   INTERFACE
 
   puts interface
 end
 
-def reveal_correct(secret_word, previous_guesses)
-  # The following string is just for testing.
-  '_ _ c _ _ _'
+def reveal_correct
+  # The following string is just for testing the display.
+  string = '_ _ c _ _ _'
+  string.center(32)
 end
 
 # Each turn have the player guess a letter (case insensitive) and then display
@@ -61,6 +62,4 @@ end
 
 # When the program is openeed add an option to load one of your saved games.
 
-display_game('secret', ['a', 'b', 'c'], 8)
-
-
+display_game
