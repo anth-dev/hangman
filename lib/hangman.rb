@@ -105,6 +105,7 @@ def reveal_correct
   # Here we need to compare the secret word with the guessed letters to return
   # a string that shows what letters were right and where they go in the secret
   # word. Any that have not been guessed will be represented as an underscore.
+
 end
 
 # Each turn have the player guess a letter (case insensitive) and then display
@@ -112,7 +113,5 @@ end
 # they game.
 
 # Implement the ability to save the game at the start of the player's turn.
-
-# When the program is openeed add an option to load one of your saved games.
 
 display_menu
