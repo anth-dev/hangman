@@ -4,6 +4,7 @@
 class HangmanGame
   def initialize
     @incorrect_guesses = 0
+    @previous_guesses = []
     @secret_word = pick_random_word
     @head = ' '
     @neck = ' '
@@ -16,13 +17,13 @@ class HangmanGame
   end
 
   # Here is the logic that runs the game
-  def start_game
+  def take_turn
     # Each turn have the player guess a letter (case insensitive) and then display
     # whether it was correct or not. If the player is out of guesses then they loose
     # they game.
-    puts "we are calling the start game method!"
-    puts "The secret word is: #{@secret_word}"
-    
+    display_game
+    print '>'
+    handle_player_guess
   end
 
   private
@@ -31,7 +32,7 @@ class HangmanGame
   # 5 and 12 characters long to be the secret word.
   def pick_random_word
     picked = File.readlines('5desk.txt').sample
-    picked.length.between?(5, 12) ? picked : pick_random_word
+    picked.length.between?(5, 12) ? picked.downcase : pick_random_word
   end
 
   def display_game
@@ -43,10 +44,10 @@ class HangmanGame
   
     interface = <<~INTERFACE
       ------------------------------------------
-      |   #{@rope}   | enter 'save' to save and quit  |
+      |   #{@rope}   |#{@previous_guesses.join(' ').center(32)}|
       |   #{@head}   |--------------------------------|
-      |  #{@right_arm}#{@neck}#{@left_arm}  |                                |
-      |   #{@torso}   |                                |
+      |  #{@right_arm}#{@neck}#{@left_arm}  |#{"Enter 'save' to save and quit.".center(32)}|
+      |   #{@torso}   |#{'Otherwise guess a letter!'.center(32)}|
       |  #{@right_leg} #{@left_leg}  |--------------------------------|
       |       |#{reveal_correct}|
       ------------------------------------------
@@ -78,13 +79,22 @@ class HangmanGame
     # word. Any that have not been guessed will be represented as an underscore.
   
   end
+
+  def handle_player_guess
+    # Get input from the player.
+    guess = gets.chomp.downcase
+    
+    # Check to see if they are trying to save. Later on change the puts
+    # to call the method that will serialize and save the game state.
+    puts 'trying to save' if guess == 'save'
+
+  end
 end
 
 # Implement the ability to save the game at the start of the player's turn.
 
 
-# This displays the game menu when the game is ran. It should give the player
-# the following options: New Game, Load Game, and Quit.
+# Display the main menu for the game.
 def display_menu
   system 'clear'
   
@@ -111,8 +121,8 @@ def handle_menu_selection
     # Generate a new game object.
     game = HangmanGame.new
 
-    # Start a new game. ** NEED TO MAKE THE METHOD **
-    game.start_game
+    # Start take the first turn.
+    game.take_turn
   when '2'
     # Load a saved game.
   when '3'
