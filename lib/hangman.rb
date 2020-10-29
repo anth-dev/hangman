@@ -3,7 +3,16 @@
 # This class creates Hangman games.
 class HangmanGame
   def initialize
+    @incorrect_guesses = 0
     @secret_word = pick_random_word
+    @head = ' '
+    @neck = ' '
+    @left_arm = ' '
+    @right_arm = ' '
+    @torso = ' '
+    @left_leg = ' '
+    @right_leg = ' '
+    @rope = ' '
   end
 
   # Here is the logic that runs the game
@@ -13,6 +22,7 @@ class HangmanGame
     # they game.
     puts "we are calling the start game method!"
     puts "The secret word is: #{@secret_word}"
+    
   end
 
   private
@@ -24,34 +34,37 @@ class HangmanGame
     picked.length.between?(5, 12) ? picked : pick_random_word
   end
 
-  def display_game(incorrect_guesses)
-    # The following variables are for letting the display know what person pieces
-    # to draw. These are probably better moved to a different method and have the
-    # incorrect_guesses instead be an instance variable once the class is made
-    # for the game.
-    head = incorrect_guesses >= 1 ? 'O' : ' '
-    neck = incorrect_guesses >= 2 ? '|' : ' '
-    left_arm = incorrect_guesses >= 3 ? '/' : ' '
-    right_arm = incorrect_guesses >= 4 ? '\\' : ' '
-    torso = incorrect_guesses >= 5 ? '|' : ' '
-    left_leg = incorrect_guesses >= 6 ? '\\' : ' '
-    right_leg = incorrect_guesses >= 7 ? '/' : ' '
-    rope = incorrect_guesses >= 8 ? '|' : ' '
+  def display_game
+    # Set which body parts to draw.
+    set_body_parts_to_display
+
   
     system 'clear'
   
     interface = <<~INTERFACE
       ------------------------------------------
-      |   #{rope}   | enter 'save' to save and quit  |
-      |   #{head}   |--------------------------------|
-      |  #{right_arm}#{neck}#{left_arm}  |                                |
-      |   #{torso}   |                                |
-      |  #{right_leg} #{left_leg}  |--------------------------------|
+      |   #{@rope}   | enter 'save' to save and quit  |
+      |   #{@head}   |--------------------------------|
+      |  #{@right_arm}#{@neck}#{@left_arm}  |                                |
+      |   #{@torso}   |                                |
+      |  #{@right_leg} #{@left_leg}  |--------------------------------|
       |       |#{reveal_correct}|
       ------------------------------------------
     INTERFACE
   
     puts interface
+  end
+
+  def set_body_parts_to_display
+    # Set the body parts to draw based on the number of incorrect guesses made.
+    @head = '0' if @incorrect_guesses >= 1
+    @neck = '|' if @incorrect_guesses >= 2
+    @left_arm = '/' if @incorrect_guesses >= 3
+    @right_arm = '\\' if @incorrect_guesses >= 4
+    @torso = '|' if @incorrect_guesses >= 5
+    @left_leg = '\\' if @incorrect_guesses >= 6
+    @right_leg = '/' if @incorrect_guesses >= 7
+    @rope = '|' if @incorrect_guesses >= 8
   end
 
   
