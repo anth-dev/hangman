@@ -83,10 +83,43 @@ class HangmanGame
   def handle_player_guess
     # Get input from the player.
     guess = gets.chomp.downcase
+
+    # Check to see if we have only letters in the guess.
     
     # Check to see if they are trying to save. Later on change the puts
-    # to call the method that will serialize and save the game state.
+    # to call the method that will save the game state and exit the game.
     puts 'trying to save' if guess == 'save'
+
+    # Check the guess to make sure it's only one character, if it's more then
+    # one then start their turn over.
+    take_turn if guess.length > 1
+
+    # We have a valid guess. Let's check it!
+    check_guess(guess)
+  end
+
+  def check_guess(guess)
+    # Check to see if the letter guessed is contained in the secret word at
+    # at least one time.
+    if @secret_word.include? guess
+      
+      # Convert the secret word to an array and use each_with_index to check
+      # for matches. Maybe do the conversion when the word is chosen.
+
+      # Make an instance variable to track what the player has solved so far
+      # that will be the same length as the secret word but have each character
+      # be an underscore. Use the information from each_with_index to change
+      # the character at the same index in the solved so far array. Also change
+      # the display to use this instance variable instead of reveal_correct.
+
+
+    # If not add the guess to the array of previous guesses. Increment the
+    # count of incorrect guesses
+    else
+
+    end
+
+    # Check for either a win or a loss.
 
   end
 end
