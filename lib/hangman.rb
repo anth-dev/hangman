@@ -1,11 +1,20 @@
 # frozen_string_literal: true
 
+require 'pry'
+
 # This class creates Hangman games.
 class HangmanGame
   def initialize
     @incorrect_guesses = 0
     @previous_guesses = []
-    @secret_word = pick_random_word
+    @secret_word = ['r', 'u', 'b', 'y']
+    # Using temporary secret_word assignment for testing.
+    # @secret_word = pick_random_word
+
+    # Make an instance variable to give feedback on correct gueses. It will
+    # start was an array of underscores the same length as the secret word.
+    @guess_feedback = create_blank_feedback_array
+
     @head = ' '
     @neck = ' '
     @left_arm = ' '
@@ -23,16 +32,19 @@ class HangmanGame
     # they game.
     display_game
     print '>'
+
+    # Get, and handle input from the player.
     handle_player_guess
   end
 
   private
 
   # When a game is started load the dictionary and randomly select a word between
-  # 5 and 12 characters long to be the secret word.
+  # 5 and 12 characters long to be the secret word. The format of the word should
+  # be an array of characters.
   def pick_random_word
     picked = File.readlines('5desk.txt').sample
-    picked.length.between?(5, 12) ? picked.downcase : pick_random_word
+    picked.length.between?(5, 12) ? picked.downcase.chomp.chars : pick_random_word
   end
 
   def display_game
@@ -49,7 +61,7 @@ class HangmanGame
       |  #{@right_arm}#{@neck}#{@left_arm}  |#{"Enter 'save' to save and quit.".center(32)}|
       |   #{@torso}   |#{'Otherwise guess a letter!'.center(32)}|
       |  #{@right_leg} #{@left_leg}  |--------------------------------|
-      |       |#{reveal_correct}|
+      |       |#{@guess_feedback.join(' ').center(32)}|
       ------------------------------------------
     INTERFACE
   
@@ -69,30 +81,27 @@ class HangmanGame
   end
 
   
-  def reveal_correct
-    # The following string is just for testing the display.
-    string = '_ _ c _ _ _'
-    string.center(32)
-  
-    # Here we need to compare the secret word with the guessed letters to return
-    # a string that shows what letters were right and where they go in the secret
-    # word. Any that have not been guessed will be represented as an underscore.
-  
+  def create_blank_feedback_array
+    # Make an array to eventually return.
+    feedback = []
+
+    # Iterate over the secret word array with map or each. For each element
+    # push an underscore to the feedback array. OR possibly just map the array
+    # changing the value to an underscore and return that array???
+    @secret_word.map { |character| character = '_' }
   end
 
   def handle_player_guess
     # Get input from the player.
     guess = gets.chomp.downcase
-
-    # Check to see if we have only letters in the guess.
     
     # Check to see if they are trying to save. Later on change the puts
     # to call the method that will save the game state and exit the game.
     puts 'trying to save' if guess == 'save'
 
-    # Check the guess to make sure it's only one character, if it's more then
-    # one then start their turn over.
-    take_turn if guess.length > 1
+    # Check the guess to make sure it's only one character and only contains
+    # letters. If either is false, start the player's turn over.
+    take_turn if guess.length > 1 || guess != guess[/[a-z]+/]
 
     # We have a valid guess. Let's check it!
     check_guess(guess)
@@ -101,15 +110,10 @@ class HangmanGame
   def check_guess(guess)
     # Check to see if the letter guessed is contained in the secret word at
     # at least one time.
-    if @secret_word.include? guess
-      
-      # Convert the secret word to an array and use each_with_index to check
-      # for matches. Maybe do the conversion when the word is chosen.
+    if @secret_word.include?(guess)
 
-      # Make an instance variable to track what the player has solved so far
-      # that will be the same length as the secret word but have each character
-      # be an underscore. Use the information from each_with_index to change
-      # the character at the same index in the solved so far array. Also change
+      # Use the information from each_with_index to change
+      # the character at the same index in the guess feedback array. Also change
       # the display to use this instance variable instead of reveal_correct.
 
 
