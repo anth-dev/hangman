@@ -81,9 +81,6 @@ class HangmanGame
 
   
   def create_blank_feedback_array
-    # Make an array to eventually return.
-    feedback = []
-
     # Iterate over the secret word array with map or each. For each element
     # push an underscore to the feedback array. OR possibly just map the array
     # changing the value to an underscore and return that array???
