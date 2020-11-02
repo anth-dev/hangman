@@ -112,15 +112,15 @@ class HangmanGame
     # at least one time.
     if @secret_word.include?(guess)
 
-      # Use the information from each_with_index to change
-      # the character at the same index in the guess feedback array. Also change
-      # the display to use this instance variable instead of reveal_correct.
+      # Use the each_with_index to find each element in the secret guess array
+      # that matches the current guess. Once a match is found use the index to
+      # change the element at the same index in guess feedback array to show
+      # the correct location.
 
 
-    # If not add the guess to the array of previous guesses. Increment the
-    # count of incorrect guesses
     else
-
+      # If not a correct guess add the guess to the array of previous guesses.
+      # Increment the count of incorrect guesses.
     end
 
     # Check for either a win or a loss.
