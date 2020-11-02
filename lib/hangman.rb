@@ -51,7 +51,6 @@ class HangmanGame
     # Set which body parts to draw.
     set_body_parts_to_display
 
-  
     system 'clear'
   
     interface = <<~INTERFACE
@@ -138,7 +137,7 @@ class HangmanGame
 
   def lose_game
     display_game
-    puts "You Lose!"
+    puts "You Lose! The word was #{@secret_word.join}."
     exit
   end
 
