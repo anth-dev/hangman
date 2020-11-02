@@ -135,9 +135,23 @@ class HangmanGame
   def check_for_win_or_lose
     # Check for loss. If they lost display the interface one last time showing
     # the completed hangman then exit with a 'You Lose!' message.
+    lose_game if @incorrect_guesses >= 8
 
     # Check for win. If they won, display the interface one last time showing
     # the completed word and exit with a 'You Win!' message.
+    win_game if @secret_word == @guess_feedback
+  end
+
+  def lose_game
+    display_game
+    puts "You Lose!"
+    exit
+  end
+
+  def win_game
+    display_game
+    puts "You Win!"
+    exit
   end
 end
 
