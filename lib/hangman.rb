@@ -7,14 +7,8 @@ class HangmanGame
   def initialize
     @incorrect_guesses = 0
     @previous_guesses = []
-    @secret_word = ['r', 'u', 'b', 'y']
-    # Using temporary secret_word assignment for testing.
-    # @secret_word = pick_random_word
-
-    # Make an instance variable to give feedback on correct gueses. It will
-    # start was an array of underscores the same length as the secret word.
+    @secret_word = pick_random_word
     @guess_feedback = create_blank_feedback_array
-
     @head = ' '
     @neck = ' '
     @left_arm = ' '
