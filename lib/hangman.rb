@@ -35,6 +35,12 @@ class HangmanGame
 
     # Get, and handle input from the player.
     handle_player_guess
+
+    # Check for win/loss.
+    check_for_win_or_lose
+
+    # If they haven't won or lost, continue!
+    take_turn
   end
 
   private
@@ -116,15 +122,22 @@ class HangmanGame
       # that matches the current guess. Once a match is found use the index to
       # change the element at the same index in guess feedback array to show
       # the correct location.
-
+      @secret_word.each_with_index { |character, index| @guess_feedback[index] = guess if character == guess }
 
     else
       # If not a correct guess add the guess to the array of previous guesses.
       # Increment the count of incorrect guesses.
+      @previous_guesses.push(guess)
+      @incorrect_guesses += 1
     end
+  end
 
-    # Check for either a win or a loss.
+  def check_for_win_or_lose
+    # Check for loss. If they lost display the interface one last time showing
+    # the completed hangman then exit with a 'You Lose!' message.
 
+    # Check for win. If they won, display the interface one last time showing
+    # the completed word and exit with a 'You Win!' message.
   end
 end
 
