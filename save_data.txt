@@ -1,0 +1,31 @@
+---
+:incorrect_guesses: 2
+:previous_guesses:
+- o
+- u
+:secret_word:
+- e
+- v
+- i
+- t
+- a
+- b
+- l
+- e
+:guess_feedback:
+- e
+- _
+- i
+- _
+- a
+- _
+- _
+- e
+:head: '0'
+:neck: "|"
+:left_arm: " "
+:right_arm: " "
+:torso: " "
+:left_leg: " "
+:right_leg: " "
+:rope: " "

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pry'
+require 'yaml'
 
 # This class creates Hangman games.
 class HangmanGame
@@ -35,6 +36,10 @@ class HangmanGame
 
     # If they haven't won or lost, continue!
     take_turn
+  end
+
+  def load_game
+    puts "Trying to load"
   end
 
   private
@@ -93,7 +98,7 @@ class HangmanGame
     
     # Check to see if they are trying to save. Later on change the puts
     # to call the method that will save the game state and exit the game.
-    puts 'trying to save' if guess == 'save'
+    save_game if guess == 'save'
 
     # Check the guess to make sure it's only one character and only contains
     # letters. If either is false, start the player's turn over.
@@ -143,6 +148,30 @@ class HangmanGame
     puts "You Win!"
     exit
   end
+
+  def save_game
+    # Serialize the instance variables with yaml and save to disk.
+    game_state = YAML.dump ({
+      incorrect_guesses: @incorrect_guesses,
+      previous_guesses: @previous_guesses,
+      secret_word: @secret_word,
+      guess_feedback: @guess_feedback,
+      head: @head,
+      neck: @neck,
+      left_arm: @left_arm,
+      right_arm: @right_arm,
+      torso: @torso,
+      left_leg: @left_leg,
+      right_leg: @right_leg,
+      rope: @rope
+    })
+
+    # Write the data to a file.
+    File.open('save_data.txt', 'w') { |f| f.write game_state }
+
+    # Exit the game.
+    exit
+  end
 end
 
 # Implement the ability to save the game at the start of the player's turn.
@@ -179,6 +208,7 @@ def handle_menu_selection
     game.take_turn
   when '2'
     # Load a saved game.
+    game.load_game
   when '3'
     # Quit the game.
     exit
