@@ -75,7 +75,7 @@ class HangmanGame
     set_body_parts_to_display
 
     system 'clear'
-  
+
     interface = <<~INTERFACE
       ------------------------------------------
       |   #{@rope}   |#{@previous_guesses.join(' ').center(32)}|
@@ -86,7 +86,7 @@ class HangmanGame
       |       |#{@guess_feedback.join(' ').center(32)}|
       ------------------------------------------
     INTERFACE
-  
+
     puts interface
   end
 
@@ -102,18 +102,17 @@ class HangmanGame
     @rope = '|' if @incorrect_guesses >= 8
   end
 
-  
   def create_blank_feedback_array
     # Iterate over the secret word array with map or each. For each element
     # push an underscore to the feedback array. OR possibly just map the array
     # changing the value to an underscore and return that array???
-    @secret_word.map { |character| character = '_' }
+    @secret_word.map { |_character| character = '_' }
   end
 
   def handle_player_guess
     # Get input from the player.
     guess = gets.chomp.downcase
-    
+
     # Check to see if they are trying to save. Later on change the puts
     # to call the method that will save the game state and exit the game.
     save_game if guess == 'save'
@@ -163,26 +162,26 @@ class HangmanGame
 
   def win_game
     display_game
-    puts "You Win!"
+    puts 'You Win!'
     exit
   end
 
   def save_game
     # Serialize the instance variables with yaml and save to disk.
-    game_state = YAML.dump ({
-      incorrect_guesses: @incorrect_guesses,
-      previous_guesses: @previous_guesses,
-      secret_word: @secret_word,
-      guess_feedback: @guess_feedback,
-      head: @head,
-      neck: @neck,
-      left_arm: @left_arm,
-      right_arm: @right_arm,
-      torso: @torso,
-      left_leg: @left_leg,
-      right_leg: @right_leg,
-      rope: @rope
-    })
+    game_state = YAML.dump({
+                             incorrect_guesses: @incorrect_guesses,
+                             previous_guesses: @previous_guesses,
+                             secret_word: @secret_word,
+                             guess_feedback: @guess_feedback,
+                             head: @head,
+                             neck: @neck,
+                             left_arm: @left_arm,
+                             right_arm: @right_arm,
+                             torso: @torso,
+                             left_leg: @left_leg,
+                             right_leg: @right_leg,
+                             rope: @rope
+                           })
 
     # Write the data to a file.
     File.open('save_data.txt', 'w') { |f| f.write game_state }
@@ -194,11 +193,10 @@ end
 
 # Implement the ability to save the game at the start of the player's turn.
 
-
 # Display the main menu for the game.
 def display_menu
   system 'clear'
-  
+
   interface = <<~INTERFACE
     ------------------------------------------
     |#{'Welcome to Hangman'.center(40)}|
