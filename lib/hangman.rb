@@ -39,7 +39,25 @@ class HangmanGame
   end
 
   def load_game
-    puts "Trying to load"
+    # Read the save_data file.
+    game_state = File.open('save_data.txt', 'r') { |f| YAML.load(f) }
+
+    # Set the instance variables using the loaded data.
+    @incorrect_guesses = game_state[:incorrect_guesses]
+    @previous_guesses = game_state[:previous_guesses]
+    @secret_word = game_state[:secret_word]
+    @guess_feedback = game_state[:guess_feedback]
+    @head = game_state[:head]
+    @neck = game_state[:neck]
+    @left_arm = game_state[:left_arm]
+    @right_arm = game_state[:right_arm]
+    @torso = game_state[:torso]
+    @left_leg = game_state[:left_leg]
+    @right_leg = game_state[:right_leg]
+    @rope = game_state[:rope]
+
+    # Start the player's turn.
+    take_turn
   end
 
   private
@@ -62,7 +80,7 @@ class HangmanGame
       ------------------------------------------
       |   #{@rope}   |#{@previous_guesses.join(' ').center(32)}|
       |   #{@head}   |--------------------------------|
-      |  #{@right_arm}#{@neck}#{@left_arm}  |#{"Enter 'save' to save and quit.".center(32)}|
+      |  #{@right_arm}#{@neck}#{@left_arm}  |#{"Enter 'save' to save.".center(32)}|
       |   #{@torso}   |#{'Otherwise guess a letter!'.center(32)}|
       |  #{@right_leg} #{@left_leg}  |--------------------------------|
       |       |#{@guess_feedback.join(' ').center(32)}|
@@ -169,8 +187,8 @@ class HangmanGame
     # Write the data to a file.
     File.open('save_data.txt', 'w') { |f| f.write game_state }
 
-    # Exit the game.
-    exit
+    # Return to the main menu.
+    display_menu
   end
 end
 
@@ -207,6 +225,9 @@ def handle_menu_selection
     # Start take the first turn.
     game.take_turn
   when '2'
+    # Generate a new game object.
+    game = HangmanGame.new
+
     # Load a saved game.
     game.load_game
   when '3'
