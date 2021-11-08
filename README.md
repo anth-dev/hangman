@@ -1,4 +1,7 @@
 # hangman
-This is a hangman game programmed in Ruby. It is played on the command line.
+This is a single player hangman game programmed in Ruby. It supports saving and loading your game state. It is played on the command line.
 
-[Play live on Repl.it](https://repl.it/@anthdev/hangman-1)
+![Main Menu](/screenshots/menu.png)
+![Game Over](/screenshots/game_over.png)
+
+[Play live on Repl.it](https://repl.it/@anthdev/hangman)
